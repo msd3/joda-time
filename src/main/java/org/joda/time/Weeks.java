@@ -15,6 +15,9 @@
  */
 package org.joda.time;
 
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalField;
 import org.joda.convert.FromString;
 import org.joda.convert.ToString;
 import org.joda.time.base.BaseSingleFieldPeriod;
@@ -39,7 +42,8 @@ import org.joda.time.format.PeriodFormatter;
  * @author Stephen Colebourne
  * @since 1.4
  */
-public final class Weeks extends BaseSingleFieldPeriod {
+public final class Weeks extends BaseSingleFieldPeriod 
+                          implements TemporalAccessor {
 
     /** Constant representing zero weeks. */
     public static final Weeks ZERO = new Weeks(0);
@@ -473,5 +477,16 @@ public final class Weeks extends BaseSingleFieldPeriod {
     public String toString() {
         return "P" + String.valueOf(getValue()) + "W";
     }
+
+   @Override
+   public boolean isSupported(TemporalField field) {
+      return field == ChronoField.ALIGNED_WEEK_OF_YEAR
+              || field == ChronoField.ALIGNED_WEEK_OF_MONTH;         
+   }
+
+   @Override
+   public long getLong(TemporalField field) {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   }
 
 }
